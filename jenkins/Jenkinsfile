@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('MAVEN BUILD') {
+            steps {
+                echo 'Bulding MAVEN project...'
+                sh 'mvn clean package -f employee-manager-h2db/pom.xml'  
+                
+            }
+        }
+        
+        stage('DOCKER BUILD') {
+            steps {
+                echo 'Bulding DOCKER image...'
+                sh 'docker build -t 192.168.50.2:32000/employee-manager employee-manager-h2db'  
+                
+            }
+        }
+        
+        stage('DOCKER PUSH') {
+            steps {
+                echo 'Pushing DOCKER image...'
+                sh 'docker push 192.168.50.2:32000/employee-manager'  
+                
+            }
+        }
+        
+
+
+
+        stage('HELM') {
+            steps {
+                echo 'Helm upgrade command'
+                sh 'helm upgrade --set containerImage=${imageName} abcd aplikacja/'  
+                
+            }
+        }
+
+
+    }
+}

@@ -1,0 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.define "dawid_vm" do |dawid_vm|
+    dawid_vm.vm.box = "ubuntu/focal64"
+    dawid_vm.vm.hostname = "ubuntuvm"
+    dawid_vm.vm.network "private_network", ip: "192.168.50.2"
+    dawid_vm.vm.provider "virtualbox" do |v|
+      v.name = "ubuntuvm"
+      v.memory = 2048
+      v.cpus = 2
+    end
+    config.vm.provision "shell", path: "prepare.sh"
+  end
+end
+
+
