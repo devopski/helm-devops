@@ -1,0 +1,38 @@
+#  --------  DEPLOYMENT   --------  #
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-manager
+spec:
+  selector:
+    matchLabels:
+      app: employee-manager
+  replicas: {{ .Values.replicasNumber }}
+  template: # template for the pods
+    metadata:
+      labels:
+        app: employee-manager
+    spec:
+      containers:
+      - name: employee-manager
+        image: {{ .Values.containerImage }}
+---
+#  --------  SERVICE   --------  #
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: employee-manager-service
+
+spec:
+
+  selector:
+    app: employee-manager
+    
+  ports:
+    - name: http
+      port: 8080
+      nodePort: 30001
+
+  type: NodePort      

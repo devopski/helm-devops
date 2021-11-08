@@ -1,0 +1,2 @@
+replicasNumber: 1
+containerImage: localhost:32000/employee-manager
