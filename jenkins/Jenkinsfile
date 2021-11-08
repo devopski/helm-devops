@@ -30,9 +30,8 @@ pipeline {
         stage('HELM') {
             steps {
                 echo 'Helm upgrade command'
-                //sh 'helm install employee-manager employee-manager/'
+                sh 'helm install employee-manager employee-manager/ || helm upgrade employee-manager employee-manager/'
                 //sh 'helm upgrade --set containerImage=${imageName} employee-manager employee-manager/'
-                sh 'helm upgrade employee-manager employee-manager/'
                     
             }
         }
