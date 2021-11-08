@@ -14,7 +14,7 @@ pipeline {
         stage('DOCKER BUILD') {
             steps {
                 echo 'Bulding DOCKER image...'
-                sh 'docker build -t localhost:32000/employee-manager employee-manager-h2db'  
+                sh 'docker build -t localhost:32000/employee-manager:${imageTag} employee-manager-h2db'  
                 
             }
         }
@@ -22,7 +22,7 @@ pipeline {
         stage('DOCKER PUSH') {
             steps {
                 echo 'Pushing DOCKER image...'
-                sh 'docker push localhost:32000/employee-manager'  
+                sh 'docker push localhost:32000/employee-manager:${imageTag}'  
                 
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage('HELM') {
             steps {
                 echo 'Helm upgrade command'
-                sh 'helm install employee-manager employee-manager/ || helm upgrade employee-manager employee-manager/'
+                sh 'helm install employee-manager employee-manager/ || helm upgrade --set containerImageTag=${imageTag} employee-manager employee-manager/'
                 //sh 'helm upgrade --set containerImage=${imageName} employee-manager employee-manager/'
                     
             }

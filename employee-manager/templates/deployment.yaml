@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: employee-manager
-        image: {{ .Values.containerImage }}
+        image: localhost:32000/employee-manager:{{ .Values.containerImageTag }}
 ---
 #  --------  SERVICE   --------  #
 
