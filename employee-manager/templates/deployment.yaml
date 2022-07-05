@@ -1,5 +1,3 @@
-#  --------  DEPLOYMENT   --------  #
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,22 +15,3 @@ spec:
       containers:
       - name: employee-manager
         image: localhost:32000/employee-manager:{{ .Values.containerImageTag }}
----
-#  --------  SERVICE   --------  #
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: employee-manager-service
-
-spec:
-
-  selector:
-    app: employee-manager
-    
-  ports:
-    - name: http
-      port: 8080
-      nodePort: 30001
-
-  type: NodePort      
